@@ -1,6 +1,6 @@
 --[[
 
-=====================================================================
+====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 
@@ -35,7 +35,6 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -75,7 +74,8 @@ require('lazy').setup({
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -91,14 +91,16 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  { 'folke/which-key.nvim',          opts = {} },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -112,7 +114,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
+  {
+    -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
@@ -120,7 +123,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -133,7 +137,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
@@ -144,7 +149,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -153,7 +158,8 @@ require('lazy').setup({
   -- Only load if `make` is available. Make sure you have the system
   -- requirements installed.
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -183,6 +189,58 @@ require('lazy').setup({
       require("lsp-inlayhints").setup()
     end,
   },
+
+  {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+    config = function()
+      require("nvim-tree").setup()
+    end,
+  },
+
+  {
+    "RRethy/vim-illuminate"
+  },
+
+  {
+    "ggandor/lightspeed.nvim"
+  },
+
+  {
+    'folke/zen-mode.nvim',
+    requires = {
+      'folke/twilight.nvim'
+    },
+    config = function()
+      require('zen-mode').setup {
+        window = {
+          width = 0.85
+        },
+        options = {
+         signcolumn = "no", -- disable signcolumn
+         number = false, -- disable number column
+         relativenumber = true, -- disable relative numbers
+         cursorline = false, -- disable cursorline
+         cursorcolumn = false, -- disable cursor column
+         foldcolumn = "0", -- disable fold column
+         list = false, -- disable whitespace characters
+        },
+        plugins = {
+          twilight = { enabled = true }
+        },
+      }
+    end,
+  },
+
+  {
+    'akinsho/bufferline.nvim',
+    config = function()
+      require("bufferline").setup {}
+    end,
+  },
+
 }, {})
 
 -- [[ Setting options ]]
@@ -253,11 +311,11 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+            ['<C-u>'] = false,
+            ['<C-d>'] = false,
       },
     },
-  },
+  }, 
 }
 
 -- Enable telescope fzf native, if installed
@@ -274,11 +332,11 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -287,7 +345,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -306,41 +364,41 @@ require('nvim-treesitter.configs').setup {
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+            ['<leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+            ['<leader>A'] = '@parameter.inner',
       },
     },
   },
@@ -366,18 +424,18 @@ local on_attach = function(_, bufnr)
       desc = 'LSP: ' .. desc
     end
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    vim.keymap.set('n', '<leader>l' .. keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('r', vim.lsp.buf.rename, '[R]ename')
+  nmap('c', vim.lsp.buf.code_action, '[C]ode Action')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('d', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('r', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('I', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -385,9 +443,9 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
+  nmap('wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap('wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
 
@@ -416,6 +474,19 @@ local servers = {
     },
   },
 }
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+--
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- Tree sitter keybinds
+local tree_api = require("nvim-tree.api")
+
+vim.keymap.set('n', '<leader>t', tree_api.tree.toggle, { desc = "Toggle nvim-tree" })
 
 -- Setup neovim lua configuration
 require('neodev').setup()
@@ -457,14 +528,14 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -473,7 +544,7 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -505,3 +576,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     require("lsp-inlayhints").on_attach(client, bufnr)
   end,
 })
+
+vim.keymap.set('n', '<leader>s', '<Plug>Lightspeed_omni_s', { desc = "Lightspeed omni search" })
+vim.keymap.set('n', '<leader>z', require("zen-mode").toggle, { desc = "Zen Mode" })
