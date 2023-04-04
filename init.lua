@@ -242,7 +242,14 @@ require('lazy').setup({
   },
 
   {
+<<<<<<< HEAD
     'ojroques/nvim-osc52'
+=======
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  config = function()
+    require("lsp_lines").setup()
+  end,
+>>>>>>> master
   },
 
 }, {})
