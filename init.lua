@@ -119,7 +119,7 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      -- vim.cmd.colorscheme 'onedark'
     end,
   },
 
@@ -219,13 +219,13 @@ require('lazy').setup({
           width = 0.85
         },
         options = {
-         signcolumn = "no", -- disable signcolumn
-         number = false, -- disable number column
-         relativenumber = true, -- disable relative numbers
-         cursorline = false, -- disable cursorline
-         cursorcolumn = false, -- disable cursor column
-         foldcolumn = "0", -- disable fold column
-         list = false, -- disable whitespace characters
+          signcolumn = "no",    -- disable signcolumn
+          number = false,       -- disable number column
+          relativenumber = true, -- disable relative numbers
+          cursorline = false,   -- disable cursorline
+          cursorcolumn = false, -- disable cursor column
+          foldcolumn = "0",     -- disable fold column
+          list = false,         -- disable whitespace characters
         },
         plugins = {
           twilight = { enabled = true }
@@ -247,11 +247,21 @@ require('lazy').setup({
 
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  config = function()
-    require("lsp_lines").setup()
-  end,
+    config = function()
+      require("lsp_lines").setup()
+    end,
   },
 
+  {
+    "ray-x/lsp_signature.nvim"
+  },
+
+  {
+    'EdenEast/nightfox.nvim',
+    config = function()
+      vim.cmd.colorscheme 'carbonfox'
+    end,
+  },
 }, {})
 
 -- [[ Setting options ]]
@@ -322,8 +332,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-            ['<C-u>'] = false,
-            ['<C-d>'] = false,
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
       },
     },
   },
@@ -349,15 +359,15 @@ vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
-vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
-vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
+vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, { expr = true })
+vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
 vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
@@ -379,41 +389,41 @@ require('nvim-treesitter.configs').setup {
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
+        ['aa'] = '@parameter.outer',
+        ['ia'] = '@parameter.inner',
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
       },
       goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
       },
       goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
       },
       goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-            ['<leader>a'] = '@parameter.inner',
+        ['<leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-            ['<leader>A'] = '@parameter.inner',
+        ['<leader>A'] = '@parameter.inner',
       },
     },
   },
@@ -543,14 +553,14 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete {},
-        ['<CR>'] = cmp.mapping.confirm {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete {},
+    ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-        ['<Tab>'] = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -559,7 +569,7 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -589,6 +599,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     require("lsp-inlayhints").on_attach(client, bufnr)
+    require("lsp_signature").on_attach({
+      bind = true,
+      handler_opts = {
+        border = "rounded"
+      }
+    }, bufnr)
   end,
 })
 
