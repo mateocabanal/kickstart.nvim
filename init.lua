@@ -119,7 +119,6 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      -- vim.cmd.colorscheme 'onedark'
     end,
   },
 
@@ -219,13 +218,13 @@ require('lazy').setup({
           width = 0.85
         },
         options = {
-          signcolumn = "no",    -- disable signcolumn
-          number = false,       -- disable number column
+          signcolumn = "no",     -- disable signcolumn
+          number = false,        -- disable number column
           relativenumber = true, -- disable relative numbers
-          cursorline = false,   -- disable cursorline
-          cursorcolumn = false, -- disable cursor column
-          foldcolumn = "0",     -- disable fold column
-          list = false,         -- disable whitespace characters
+          cursorline = false,    -- disable cursorline
+          cursorcolumn = false,  -- disable cursor column
+          foldcolumn = "0",      -- disable fold column
+          list = false,          -- disable whitespace characters
         },
         plugins = {
           twilight = { enabled = true }
@@ -259,9 +258,26 @@ require('lazy').setup({
   {
     'EdenEast/nightfox.nvim',
     config = function()
+      require('nightfox').setup({
+        options = {
+          styles = {
+            comments = "italic"
+          }
+        }
+      })
       vim.cmd.colorscheme 'carbonfox'
     end,
   },
+  {
+    "folke/todo-comments.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 }, {})
 
 -- [[ Setting options ]]
@@ -362,6 +378,7 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, { expr = true })
 vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
 vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
+vim.keymap.set('n', '<leader>cp', require('osc52').paste)
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
