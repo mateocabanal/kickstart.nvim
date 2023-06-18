@@ -265,7 +265,7 @@ require('lazy').setup({
           }
         }
       })
-      vim.cmd.colorscheme 'carbonfox'
+      -- vim.cmd.colorscheme 'carbonfox'
     end,
   },
   {
@@ -277,11 +277,15 @@ require('lazy').setup({
         -- refer to the configuration section below
       }
     end
-  }
+  },
+
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 }, {})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+
+vim.cmd.colorscheme "catppuccin-mocha"
 
 -- Set highlight on search
 vim.o.hlsearch = false
