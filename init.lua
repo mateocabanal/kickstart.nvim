@@ -84,7 +84,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {}, tag = "legacy" },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -279,8 +279,18 @@ require('lazy').setup({
     end
   },
 
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
-}, {})
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    'saecki/crates.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  },
+  
+}
+
+)
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
