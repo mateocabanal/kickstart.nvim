@@ -331,6 +331,9 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+-- Ctrl+c == Esc
+vim.keymap.set({ 'i', 'v' }, '<c-c>', '<Esc>')
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -636,4 +639,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.keymap.set('n', '<leader>s', '<Plug>Lightspeed_omni_s', { desc = "Lightspeed omni search" })
+
 vim.keymap.set('n', '<leader>z', require("zen-mode").toggle, { desc = "Zen Mode" })
+
+vim.diagnostic.config({ update_in_insert = true, virtual_text = false })
