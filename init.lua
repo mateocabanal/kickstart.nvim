@@ -295,6 +295,7 @@ require('lazy').setup({
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
+
 vim.cmd.colorscheme "catppuccin-mocha"
 
 -- Set highlight on search
@@ -654,3 +655,8 @@ vim.keymap.set('n', '<leader>s', '<Plug>Lightspeed_omni_s', { desc = "Lightspeed
 vim.keymap.set('n', '<leader>z', require("zen-mode").toggle, { desc = "Zen Mode" })
 
 vim.diagnostic.config({ update_in_insert = true, virtual_text = false })
+
+vim.bo.tabstop = 2
+vim.bo.shiftwidth = 2
+vim.bo.expandtab = true
+vim.bo.softtabstop = 2
