@@ -146,7 +146,10 @@ require('lazy').setup({
     --   show_trailing_blankline_indent = false,
     -- },
     main = "ibl",
-    opts = {}
+    opts = {},
+    config = function()
+      require("ibl").setup({indent = {char = '┊'}})
+    end,
   },
 
   -- "gc" to comment visual regions/lines
@@ -289,7 +292,25 @@ require('lazy').setup({
       require('crates').setup()
     end,
   },
-  
+
+  { 
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          python = { "ruff_fix", "ruff_format" },
+          rust = { "rustfmt" },
+          cpp = { "clang_format" },
+          c = { "clang_format" },
+        },
+        format_on_save = {
+          timeout_ms = 500,
+          lsp_fallback = true
+        }
+      })
+    end,
+  }
 }
 
 )
@@ -662,3 +683,12 @@ vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 vim.bo.expandtab = true
 vim.bo.softtabstop = 2
+
+vim.keymap.set('n', '<leader>lf', function()
+    require("conform").format({
+      lsp_fallback = true,
+      timeout_ms = 500,
+    })
+  end, 
+  { desc = "Format file" }
+)
