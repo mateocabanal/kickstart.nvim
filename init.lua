@@ -148,7 +148,7 @@ require('lazy').setup({
     main = "ibl",
     opts = {},
     config = function()
-      require("ibl").setup({indent = {char = '┊'}})
+      require("ibl").setup({ indent = { char = '┊' } })
     end,
   },
 
@@ -293,7 +293,7 @@ require('lazy').setup({
     end,
   },
 
-  { 
+  {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -309,6 +309,19 @@ require('lazy').setup({
           lsp_fallback = true
         }
       })
+    end,
+  },
+
+  {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+      require("wrapping").setup()
+    end
+  },
+  {
+    "biozz/whop.nvim",
+    config = function()
+      require("whop").setup({})
     end,
   }
 }
@@ -625,15 +638,15 @@ cmp.setup {
       select = true,
     },
     -- Disable tab teleportation
---    ['<Tab>'] = cmp.mapping(function(fallback)
---      if cmp.visible() then
---        cmp.select_next_item()
---      elseif luasnip.expand_or_jumpable() then
---        luasnip.expand_or_jump()
---      else
---        fallback()
---      end
---    end, { 'i', 's' }),
+    --    ['<Tab>'] = cmp.mapping(function(fallback)
+    --      if cmp.visible() then
+    --        cmp.select_next_item()
+    --      elseif luasnip.expand_or_jumpable() then
+    --        luasnip.expand_or_jump()
+    --      else
+    --        fallback()
+    --      end
+    --    end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -689,6 +702,9 @@ vim.keymap.set('n', '<leader>lf', function()
       lsp_fallback = true,
       timeout_ms = 500,
     })
-  end, 
+  end,
   { desc = "Format file" }
 )
+
+require("telescope").load_extension("whop")
+vim.keymap.set("n", "<leader>tw", ":Telescope whop<CR>", { noremap = true, desc = "whop.nvim (telescope)" })
