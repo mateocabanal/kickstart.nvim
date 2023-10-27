@@ -436,6 +436,8 @@ vim.keymap.set('n', '<leader>cp', require('osc52').paste)
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
+--
+if not vim.g.vscode then
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
@@ -505,6 +507,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+end
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -586,6 +589,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- Tree sitter keybinds
+if not vim.g.vscode then
 local tree_api = require("nvim-tree.api")
 
 vim.keymap.set('n', '<leader>t', tree_api.tree.toggle, { desc = "Toggle nvim-tree" })
@@ -685,7 +689,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     }, bufnr)
   end,
 })
-
+end
 vim.keymap.set('n', '<leader>s', '<Plug>Lightspeed_omni_s', { desc = "Lightspeed omni search" })
 
 vim.keymap.set('n', '<leader>z', require("zen-mode").toggle, { desc = "Zen Mode" })
