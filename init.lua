@@ -323,7 +323,10 @@ require('lazy').setup({
     config = function()
       require("whop").setup({})
     end,
-  }
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+  },
 }
 
 )
@@ -438,75 +441,75 @@ vim.keymap.set('n', '<leader>cp', require('osc52').paste)
 -- See `:help nvim-treesitter`
 --
 if not vim.g.vscode then
-require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  require('nvim-treesitter.configs').setup {
+    -- Add languages to be installed here that you want installed for treesitter
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
-  -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = true,
+    -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
+    auto_install = true,
 
-  highlight = { enable = true },
-  indent = { enable = true, disable = { 'python' } },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<M-space>',
-    },
-  },
-  textobjects = {
-    select = {
+    highlight = { enable = true },
+    indent = { enable = true, disable = { 'python' } },
+    incremental_selection = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+        init_selection = '<c-space>',
+        node_incremental = '<c-space>',
+        scope_incremental = '<c-s>',
+        node_decremental = '<M-space>',
       },
     },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
       },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
+        },
       },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<leader>A'] = '@parameter.inner',
+        },
       },
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
-  },
-}
+  }
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+  -- Diagnostic keymaps
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 end
 
 -- LSP settings.
@@ -590,105 +593,105 @@ vim.opt.termguicolors = true
 
 -- Tree sitter keybinds
 if not vim.g.vscode then
-local tree_api = require("nvim-tree.api")
+  local tree_api = require("nvim-tree.api")
 
-vim.keymap.set('n', '<leader>t', tree_api.tree.toggle, { desc = "Toggle nvim-tree" })
+  vim.keymap.set('n', '<leader>t', tree_api.tree.toggle, { desc = "Toggle nvim-tree" })
 
--- Setup neovim lua configuration
-require('neodev').setup()
+  -- Setup neovim lua configuration
+  require('neodev').setup()
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- Setup mason so it can manage external tooling
-require('mason').setup()
+  -- Setup mason so it can manage external tooling
+  require('mason').setup()
 
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+  -- Ensure the servers above are installed
+  local mason_lspconfig = require 'mason-lspconfig'
 
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
+  }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-
-luasnip.config.setup {}
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    -- Disable tab teleportation
-    --    ['<Tab>'] = cmp.mapping(function(fallback)
-    --      if cmp.visible() then
-    --        cmp.select_next_item()
-    --      elseif luasnip.expand_or_jumpable() then
-    --        luasnip.expand_or_jump()
-    --      else
-    --        fallback()
-    --      end
-    --    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 etc
-
-vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = "LspAttach_inlayhints",
-  callback = function(args)
-    if not (args.data and args.data.client_id) then
-      return
-    end
-
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    require("lsp-inlayhints").on_attach(client, bufnr)
-    require("lsp_signature").on_attach({
-      bind = true,
-      handler_opts = {
-        border = "rounded"
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
       }
-    }, bufnr)
-  end,
-})
+    end,
+  }
+
+  -- nvim-cmp setup
+  local cmp = require 'cmp'
+  local luasnip = require 'luasnip'
+
+  luasnip.config.setup {}
+
+  cmp.setup {
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
+    },
+    mapping = cmp.mapping.preset.insert {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete {},
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      -- Disable tab teleportation
+      --    ['<Tab>'] = cmp.mapping(function(fallback)
+      --      if cmp.visible() then
+      --        cmp.select_next_item()
+      --      elseif luasnip.expand_or_jumpable() then
+      --        luasnip.expand_or_jump()
+      --      else
+      --        fallback()
+      --      end
+      --    end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    },
+  }
+
+  -- The line beneath this is called `modeline`. See `:help modeline`
+  -- vim: ts=2 sts=2 sw=2 etc
+
+  vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = "LspAttach_inlayhints",
+    callback = function(args)
+      if not (args.data and args.data.client_id) then
+        return
+      end
+
+      local bufnr = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      require("lsp-inlayhints").on_attach(client, bufnr)
+      require("lsp_signature").on_attach({
+        bind = true,
+        handler_opts = {
+          border = "rounded"
+        }
+      }, bufnr)
+    end,
+  })
 end
 vim.keymap.set('n', '<leader>s', '<Plug>Lightspeed_omni_s', { desc = "Lightspeed omni search" })
 
