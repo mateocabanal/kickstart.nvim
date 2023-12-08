@@ -327,6 +327,10 @@ require('lazy').setup({
   {
     'Bekaboo/dropbar.nvim',
   },
+
+  {
+    'sindrets/diffview.nvim'
+  },
 }
 
 )
