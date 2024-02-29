@@ -340,10 +340,76 @@ require('lazy').setup({
       'stevearc/dressing.nvim',   -- optional for vim.ui.select
     },
     config = true,
-  }
-}
+  },
 
-)
+  {
+    'tpope/vim-fugitive',
+  },
+  {
+    'nvim-java/nvim-java',
+    dependencies = {
+      'nvim-java/lua-async-await',
+      'nvim-java/nvim-java-core',
+      'nvim-java/nvim-java-test',
+      'nvim-java/nvim-java-dap',
+      'MunifTanjim/nui.nvim',
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      {
+        'williamboman/mason.nvim',
+        opts = {
+          registries = {
+            'github:nvim-java/mason-registry',
+            'github:mason-org/mason-registry',
+          },
+        },
+      }
+
+    }
+  },
+
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+    --   "BufReadPre path/to/my-vault/**.md",
+    --   "BufNewFile path/to/my-vault/**.md",
+    -- },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+
+      -- see below for full list of optional dependencies 👇
+    },
+    config = function()
+      require("obsidian").setup({
+        workspaces = {
+          {
+            name = "personal",
+            path = "~/SYNC/OBSIDIAN-NOTES/PERSONAL NOTES",
+          },
+        },
+
+        -- see below for full list of options 👇
+      })
+    end,
+  },
+
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^3', -- Recommended
+    ft = { 'rust' },
+  },
+
+  {
+    'vimpostor/vim-tpipeline'
+  }
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -630,11 +696,15 @@ if not vim.g.vscode then
 
   mason_lspconfig.setup_handlers {
     function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-      }
+      if (server_name == "rust_analyzer") then
+        return
+      else
+        require('lspconfig')[server_name].setup {
+          capabilities = capabilities,
+          on_attach = on_attach,
+          settings = servers[server_name],
+        }
+      end
     end,
   }
 
@@ -729,3 +799,16 @@ vim.keymap.set('n', '<leader>lf', function()
 
 require("telescope").load_extension("whop")
 vim.keymap.set("n", "<leader>tw", ":Telescope whop<CR>", { noremap = true, desc = "whop.nvim (telescope)" })
+
+vim.g.rustaceanvim = {
+  server = {
+    on_attach = on_attach,
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy",
+        },
+      },
+    }
+  }
+}
