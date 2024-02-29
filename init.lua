@@ -289,7 +289,7 @@ require('lazy').setup({
     'saecki/crates.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('crates').setup()
+      require('crates').setup({})
     end,
   },
 
@@ -337,7 +337,7 @@ require('lazy').setup({
     lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim',   -- optional for vim.ui.select
+      'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
     config = true,
   },
@@ -402,7 +402,7 @@ require('lazy').setup({
 
   {
     'mrcjkb/rustaceanvim',
-    version = '^3', -- Recommended
+    version = '^4', -- Recommended
     ft = { 'rust' },
   },
 
