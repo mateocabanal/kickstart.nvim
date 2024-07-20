@@ -408,6 +408,10 @@ require('lazy').setup({
 
   {
     'vimpostor/vim-tpipeline'
+  },
+
+  {
+    'xiyaowong/transparent.nvim'
   }
 })
 
