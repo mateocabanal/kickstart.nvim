@@ -114,13 +114,6 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-    end,
-  },
 
   {
     -- Set lualine as statusline
@@ -395,7 +388,6 @@ require('lazy').setup({
           },
         },
 
-        -- see below for full list of options 👇
       })
     end,
   },
@@ -412,7 +404,22 @@ require('lazy').setup({
 
   {
     'xiyaowong/transparent.nvim'
-  }
+  },
+
+  {
+    "wojciech-kulik/xcodebuild.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-tree.lua",         -- (optional) to manage project files
+      "nvim-treesitter/nvim-treesitter", -- (optional) for Quick tests support (required Swift parser)
+    },
+    config = function()
+      require("xcodebuild").setup({
+        -- put some options here or leave it empty to use default settings
+      })
+    end,
+  },
 })
 
 -- [[ Setting options ]]
@@ -520,6 +527,32 @@ vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, { expr = true }
 vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
 vim.keymap.set('v', '<leader>c', require('osc52').copy_visual)
 vim.keymap.set('n', '<leader>cp', require('osc52').paste)
+
+-- Xcodebuild Keybinds
+vim.keymap.set("n", "<leader>X", "<cmd>XcodebuildPicker<cr>", { desc = "Show Xcodebuild Actions" })
+vim.keymap.set("n", "<leader>xf", "<cmd>XcodebuildProjectManager<cr>", { desc = "Show Project Manager Actions" })
+
+vim.keymap.set("n", "<leader>xb", "<cmd>XcodebuildBuild<cr>", { desc = "Build Project" })
+vim.keymap.set("n", "<leader>xB", "<cmd>XcodebuildBuildForTesting<cr>", { desc = "Build For Testing" })
+vim.keymap.set("n", "<leader>xr", "<cmd>XcodebuildBuildRun<cr>", { desc = "Build & Run Project" })
+
+vim.keymap.set("n", "<leader>xt", "<cmd>XcodebuildTest<cr>", { desc = "Run Tests" })
+vim.keymap.set("v", "<leader>xt", "<cmd>XcodebuildTestSelected<cr>", { desc = "Run Selected Tests" })
+vim.keymap.set("n", "<leader>xT", "<cmd>XcodebuildTestClass<cr>", { desc = "Run Current Test Class" })
+vim.keymap.set("n", "<leader>x.", "<cmd>XcodebuildTestRepeat<cr>", { desc = "Repeat Last Test Run" })
+
+vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
+vim.keymap.set("n", "<leader>xc", "<cmd>XcodebuildToggleCodeCoverage<cr>", { desc = "Toggle Code Coverage" })
+vim.keymap.set("n", "<leader>xC", "<cmd>XcodebuildShowCodeCoverageReport<cr>", { desc = "Show Code Coverage Report" })
+vim.keymap.set("n", "<leader>xe", "<cmd>XcodebuildTestExplorerToggle<cr>", { desc = "Toggle Test Explorer" })
+vim.keymap.set("n", "<leader>xs", "<cmd>XcodebuildFailingSnapshots<cr>", { desc = "Show Failing Snapshots" })
+
+vim.keymap.set("n", "<leader>xd", "<cmd>XcodebuildSelectDevice<cr>", { desc = "Select Device" })
+vim.keymap.set("n", "<leader>xp", "<cmd>XcodebuildSelectTestPlan<cr>", { desc = "Select Test Plan" })
+vim.keymap.set("n", "<leader>xq", "<cmd>Telescope quickfix<cr>", { desc = "Show QuickFix List" })
+
+vim.keymap.set("n", "<leader>xx", "<cmd>XcodebuildQuickfixLine<cr>", { desc = "Quickfix Line" })
+vim.keymap.set("n", "<leader>xa", "<cmd>XcodebuildCodeActions<cr>", { desc = "Show Code Actions" })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -708,6 +741,11 @@ if not vim.g.vscode then
           on_attach = on_attach,
           settings = servers[server_name],
         }
+
+        require('lspconfig')["sourcekit"].setup({
+          capabilities = capabilities,
+          on_attach = on_attach,
+        })
       end
     end,
   }
