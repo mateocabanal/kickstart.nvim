@@ -412,6 +412,14 @@ require('lazy').setup({
 
   {
     'xiyaowong/transparent.nvim'
+  },
+
+  {
+    'mfussenegger/nvim-jdtls'
+  },
+
+  {
+    'Yazeed1s/oh-lucy.nvim'
   }
 })
 
@@ -419,7 +427,7 @@ require('lazy').setup({
 -- See `:help vim.o`
 
 
-vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme "oh-lucy-evening"
 
 -- Set highlight on search
 vim.o.hlsearch = false
